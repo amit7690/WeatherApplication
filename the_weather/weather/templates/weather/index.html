@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>What's the weather like?</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style type="text/css">
+		.city-name{
+			font-size: 18px;
+			font-weight: bold;
+			letter-spacing: 1px;
+		}
+
+		.section-city{
+			margin-bottom: -45px;
+		}
+	</style>	
+</head>
+<body>
+	<section class="hero is-primary">
+		<div class="hero-body bg-primary">
+			<div class="container">
+				<h1 class="title">
+					What's the weather like?
+				</h1>
+			</div>
+		</div>
+	</section>
+	<section class="section section-city">
+		<div class="container">
+			<div class="columns">
+				<div class="column is-offset-4 is-4">
+					<form method="POST" action="/">
+						{% csrf_token %}
+						<div class="field has-addons">
+							<!-- <div class="control is-expanded">
+								<input class="input" type="text" placeholder="City Name">
+							</div> -->
+							<div class="select">
+							  <select id="select-city" name="city-dropdown">
+							  	<option selected disabled>Choose a City</option>
+							  	{% for city in cities %}
+								<option value="{{ city.id }}" >{{ city.name }}</option>
+								{% endfor %}
+							  </select>
+							</div>
+							<div class="control">
+								<button class="button is-info">
+									Check
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="section">
+		<div class="container">
+			<div class="columns">
+				<div class="column is-offset-4 is-4">
+					{% if weather %}
+					<div class="box">						
+						<article class="media">
+							<div class="media-left">
+								<figure class="image is-50x50">
+									<img src="http://openweathermap.org/img/w/10d.png" alt="Image">
+								</figure>
+							</div>
+							<div class="media-content">
+								<div class="content">
+								<p>
+								<span class="city-name">{{weather.city| title }}</span>
+								<br>
+								<span class="subtitle">{{ weather.temperature }}° F</span>
+								<br> {{ weather.description| title }}
+								</p>
+									
+								</div>
+							</div>
+						</article>
+					</div>
+					{% else %}
+						<h4>Choose city to check weather condition.</h4>
+				{% endif %}
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer class="footer bg-secondary">
+		<h4 class="text-center text-white"> Weather Application </h4>
+	</footer>
+
+<!-- <script>
+    
+</script> -->
+
+</script>
+</body>
+</html>
